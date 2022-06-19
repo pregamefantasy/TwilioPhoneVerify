@@ -40,6 +40,17 @@ class TwilioVerifyRepositoryImpl implements TwilioVerifyRepository {
         body: {'To': phone, 'Channel': 'sms'},
         headers: {'Authorization': authorization});
   }
+  
+  @override
+  Future<TwilioResponse> sendWhatsappCode(String phone) async {
+    // TODO: implement sendEmailCode
+    String url = '$baseUrl${TwilioVerifyEndpoint.verification}';
+
+    return await resolveHttpRequest(
+        url: url,
+        body: {'To': phone, 'Channel': 'whatsapp'},
+        headers: {'Authorization': authorization});
+  }
 
   @override
   Future<TwilioResponse> verifyEmailCode(String email, String code) async {
@@ -53,6 +64,16 @@ class TwilioVerifyRepositoryImpl implements TwilioVerifyRepository {
 
   @override
   Future<TwilioResponse> verifySmsCode(String phone, String code) async {
+    String url = '$baseUrl${TwilioVerifyEndpoint.verificationCheck}';
+
+    return await resolveHttpRequest(
+        url: url,
+        body: {'To': phone, 'Code': code},
+        headers: {'Authorization': authorization});
+  }
+  
+  @override
+  Future<TwilioResponse> verifyWhatsappCode(String phone, String code) async {
     String url = '$baseUrl${TwilioVerifyEndpoint.verificationCheck}';
 
     return await resolveHttpRequest(
